@@ -12,20 +12,20 @@ import javax.validation.constraints.Size;
 @Value
 public class EndpointHit {
 
-    Long id;
+    private Long id;
 
     @NotNull
     @Size(max = 255)
-    String app;
+    private String app;
 
     @NotNull
     @Size(max = 512)
-    String uri;
+    private String uri;
 
     @NotNull
     @Size(max = 16)
-    String ip;
+    private String ip;
 
     @NotNull
-    String timestamp;
+    private String timestamp;
 }
