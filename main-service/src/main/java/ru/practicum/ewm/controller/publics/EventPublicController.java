@@ -32,34 +32,34 @@ public class EventPublicController {
     @GetMapping
     public List<EventShortDto> getPublicEvents(
             @RequestParam(
-                    name = Constant.TEXT_PARAMETER_NAME,
+                    name = Constant.PARAMETER_TEXT,
                     required = false) String text,
             @RequestParam(
-                    name = Constant.CATEGORIES_PARAMETER_NAME,
+                    name = Constant.PARAMETER_CATEGORIES,
                     required = false) List<Long> categories,
             @RequestParam(
-                    name = Constant.PAID_PARAMETER_NAME,
+                    name = Constant.PARAMETER_PAID,
                     required = false) Boolean paid,
             @RequestParam(
-                    name = Constant.RANGE_START_PARAMETER_NAME,
+                    name = Constant.PARAMETER_RANGE_START,
                     required = false)
             @DateTimeFormat(pattern = Constant.DATE_TIME_FORMAT) LocalDateTime rangeStart,
             @RequestParam(
-                    name = Constant.RANGE_END_PARAMETER_NAME,
+                    name = Constant.PARAMETER_RANGE_END,
                     required = false)
             @DateTimeFormat(pattern = Constant.DATE_TIME_FORMAT) LocalDateTime rangeEnd,
             @RequestParam(
-                    name = Constant.ONLY_AVAILABLE_PARAM_NAME,
-                    defaultValue = Constant.FALSE_DEFAULT_VALUE) Boolean onlyAvailable,
+                    name = Constant.PARAMETER_ONLY_AVAILABLE,
+                    defaultValue = Constant.DEFAULT_FALSE) Boolean onlyAvailable,
             @RequestParam(
-                    name = Constant.SORT_PARAMETER_NAME,
+                    name = Constant.PARAMETER_SORT,
                     required = false) String sort,
             @RequestParam(
-                    name = Constant.FROM_PARAMETER_NAME,
-                    defaultValue = Constant.ZERO_DEFAULT_VALUE) @PositiveOrZero Integer from,
+                    name = Constant.PARAMETER_FROM,
+                    defaultValue = Constant.DEFAULT_ZERO) @PositiveOrZero Integer from,
             @RequestParam(
-                    name = Constant.SIZE_PARAMETER_NAME,
-                    defaultValue = Constant.TEN_DEFAULT_VALUE) @Positive Integer size,
+                    name = Constant.PARAMETER_SIZE,
+                    defaultValue = Constant.DEFAULT_TEN) @Positive Integer size,
             HttpServletRequest request) {
         log.info("Public запрос на получение событий с возможностью фильтрации text --> {}, categories --> {}, " +
                         "paid --> {}, rangeStart --> {}, rangeEnd --> {}, onlyAvailable --> {}, sort --> {}, " +
@@ -77,5 +77,4 @@ public class EventPublicController {
                 eventId);
         return eventService.getPublicEventById(eventId, request);
     }
-
 }

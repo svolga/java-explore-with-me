@@ -9,15 +9,11 @@ import ru.practicum.ewm.entity.Location;
 import ru.practicum.ewm.utils.Constant;
 import ru.practicum.ewm.utils.validation.TwoHoursLater;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-
-import static ru.practicum.ewm.utils.Constant.DATE_TIME_FORMAT;
 
 @Data
 @Builder(toBuilder = true)

@@ -3,7 +3,6 @@ package ru.practicum.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 import lombok.Data;
 
 @Data

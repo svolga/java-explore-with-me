@@ -4,14 +4,11 @@ import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventShortDto;
 import ru.practicum.ewm.dto.event.NewEventDto;
-import ru.practicum.ewm.dto.event.UpdateEventAdminRequest;
-import ru.practicum.ewm.dto.event.UpdateEventUserRequest;
 import ru.practicum.ewm.entity.Event;
 import ru.practicum.ewm.entity.Location;
 import ru.practicum.ewm.entity.User;
 import ru.practicum.ewm.enums.EventState;
 import ru.practicum.ewm.entity.Category;
-import ru.practicum.ewm.enums.StateAction;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -92,37 +89,5 @@ public class EventMapper {
         return events.stream()
                 .map(EventMapper::toEventFullDto)
                 .collect(Collectors.toList());
-    }
-
-    public static UpdateEventUserRequest toUpdateEventUserRequest(EventFullDto eventFullDto, StateAction action) {
-        return UpdateEventUserRequest.builder()
-                .annotation(eventFullDto.getAnnotation())
-                .category(eventFullDto.getCategory().getId())
-                .description(eventFullDto.getDescription())
-                .eventDate(eventFullDto.getEventDate())
-                .location(eventFullDto.getLocation())
-                .paid(eventFullDto.getPaid())
-//                .participantLimit(eventFullDto.getParticipantLimit())
-                .participantLimit(eventFullDto.getParticipantLimit() == null ? 0 : eventFullDto.getParticipantLimit())
-                .requestModeration(eventFullDto.getRequestModeration())
-                .stateAction(action)
-                .title(eventFullDto.getTitle())
-                .build();
-    }
-
-    public static UpdateEventAdminRequest toUpdateEventAdminRequest(EventFullDto eventFullDto, StateAction action) {
-        return UpdateEventAdminRequest.builder()
-                .annotation(eventFullDto.getAnnotation())
-                .category(eventFullDto.getCategory().getId())
-                .description(eventFullDto.getDescription())
-                .eventDate(eventFullDto.getEventDate())
-                .location(eventFullDto.getLocation())
-                .paid(eventFullDto.getPaid())
-//                .participantLimit(eventFullDto.getParticipantLimit())
-                .participantLimit(eventFullDto.getParticipantLimit() == null ? 0 : eventFullDto.getParticipantLimit())
-                .requestModeration(eventFullDto.getRequestModeration())
-                .stateAction(action)
-                .title(eventFullDto.getTitle())
-                .build();
     }
 }

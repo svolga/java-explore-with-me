@@ -82,7 +82,7 @@ public class StatsServiceImpl implements StatsService {
                     .collect(Collectors.toList());
         }
 
-        Long views = Long.valueOf(hits.size());
+        Long views = (long) hits.size();
         return hits.stream()
                 .map(hit -> new ViewStats(hit.getApp(), hit.getUri(), views))
                 .sorted(viewDesc)

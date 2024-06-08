@@ -2,7 +2,6 @@ package ru.practicum.ewm.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.dto.user.NewUserRequest;
@@ -10,7 +9,6 @@ import ru.practicum.ewm.dto.user.UserDto;
 import ru.practicum.ewm.entity.User;
 import ru.practicum.ewm.repository.UserRepository;
 import ru.practicum.ewm.utils.errors.ErrorConstants;
-import ru.practicum.ewm.utils.errors.exceptions.ConflictConstraintUniqueException;
 import ru.practicum.ewm.utils.errors.exceptions.NotFoundException;
 import ru.practicum.ewm.utils.logger.ListLogger;
 import ru.practicum.ewm.utils.mapper.UserMapper;
@@ -18,7 +16,6 @@ import ru.practicum.ewm.utils.paging.Paging;
 
 import java.util.List;
 
-import static ru.practicum.ewm.utils.errors.ErrorConstants.USER_NAME_UNIQUE_VIOLATION;
 
 @Service
 @Slf4j

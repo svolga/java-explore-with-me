@@ -11,8 +11,6 @@ import ru.practicum.ewm.utils.Constant;
 
 import java.time.LocalDateTime;
 
-import static ru.practicum.ewm.utils.Constant.DATE_TIME_FORMAT;
-
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor

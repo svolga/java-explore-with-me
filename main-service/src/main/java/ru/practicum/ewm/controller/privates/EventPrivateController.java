@@ -40,11 +40,11 @@ public class EventPrivateController {
     @GetMapping
     public List<EventShortDto> getEventsByUser(@Positive @PathVariable Long userId,
                                                @PositiveOrZero @RequestParam(
-                                                       name = Constant.FROM_PARAMETER_NAME,
-                                                       defaultValue = Constant.ZERO_DEFAULT_VALUE) Integer from,
+                                                       name = Constant.PARAMETER_FROM,
+                                                       defaultValue = Constant.DEFAULT_ZERO) Integer from,
                                                @Positive @RequestParam(
-                                                       name = Constant.SIZE_PARAMETER_NAME,
-                                                       defaultValue = Constant.TEN_DEFAULT_VALUE) Integer size) {
+                                                       name = Constant.PARAMETER_SIZE,
+                                                       defaultValue = Constant.DEFAULT_TEN) Integer size) {
         log.info("Получить события с доступом private для userId --> {}, from --> {}, size --> {}", userId, from, size);
         return eventService.getEventsByUser(userId, from, size);
     }
@@ -61,7 +61,8 @@ public class EventPrivateController {
     @GetMapping(Constant.EVENT_ID_PATH_VARIABLE)
     public EventFullDto getEventByUser(@Positive @PathVariable Long userId,
                                        @Positive @PathVariable Long eventId) {
-        log.info("Получение полной информации о событии eventId --> {}  добавленном текущим пользователем userId --> {}");
+        log.info("Получение полной информации о событии eventId --> {} " +
+                " добавленном текущим пользователем userId --> {}", eventId, userId);
         return eventService.getEventByUser(userId, eventId);
 
     }
@@ -94,5 +95,4 @@ public class EventPrivateController {
                 userId, eventId, request);
         return eventService.updateRequestsStatus(userId, eventId, request);
     }
-
 }

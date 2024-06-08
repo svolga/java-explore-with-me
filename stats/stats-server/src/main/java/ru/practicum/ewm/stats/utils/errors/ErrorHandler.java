@@ -12,8 +12,6 @@ import ru.practicum.ewm.stats.utils.Constant;
 import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 
-import static ru.practicum.ewm.stats.utils.Constant.CONTROLLER_PATH;
-
 @RestControllerAdvice
 @Slf4j
 public class ErrorHandler {

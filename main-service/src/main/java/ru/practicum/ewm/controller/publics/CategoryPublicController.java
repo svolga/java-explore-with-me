@@ -27,11 +27,11 @@ public class CategoryPublicController {
     @GetMapping
     public List<CategoryDto> getCategories(
             @PositiveOrZero @RequestParam(
-                    name = Constant.FROM_PARAMETER_NAME,
-                    defaultValue = Constant.ZERO_DEFAULT_VALUE) Integer from,
+                    name = Constant.PARAMETER_FROM,
+                    defaultValue = Constant.DEFAULT_ZERO) Integer from,
             @Positive @RequestParam(
-                    name = Constant.SIZE_PARAMETER_NAME,
-                    defaultValue = Constant.TEN_DEFAULT_VALUE) Integer size) {
+                    name = Constant.PARAMETER_SIZE,
+                    defaultValue = Constant.DEFAULT_TEN) Integer size) {
         log.info("Получить список категорий с доступом public, значение from --> {}, " +
                 "size --> {}", from, size);
         return categoryService.getCategories(from, size);

@@ -9,12 +9,7 @@ import ru.practicum.ewm.dto.category.CategoryDto;
 import ru.practicum.ewm.dto.user.UserShortDto;
 import ru.practicum.ewm.entity.Location;
 import ru.practicum.ewm.enums.EventState;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 import static ru.practicum.ewm.utils.Constant.DATE_TIME_FORMAT;

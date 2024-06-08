@@ -40,7 +40,7 @@ public class CompilationServiceImpl implements CompilationService {
         try {
             Compilation newCompilation = compilationRepository
                     .save(CompilationMapper.toCompilationEntity(compilation, events));
-            log.info("New compilation: {} added", newCompilation);
+            log.info("Добавлена подборка событий --> {}", newCompilation);
             return CompilationMapper.toCompilationDto(newCompilation);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictConstraintUniqueException(COMPILATION_TITLE_UNIQUE_VIOLATION);
@@ -65,7 +65,7 @@ public class CompilationServiceImpl implements CompilationService {
             compilation = compilation.toBuilder().events(events).build();
         }
         Compilation updatedCompilation = compilationRepository.save(compilation);
-        log.info("Compilation: {} updated", updatedCompilation);
+        log.info("Обновлена подборка событий --> {}", updatedCompilation);
 
         return CompilationMapper.toCompilationDto(updatedCompilation);
     }
@@ -73,21 +73,18 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     @Transactional
     public CompilationDto deleteCompilation(Integer compId) {
-        CompilationDto deleted = CompilationMapper.toCompilationDto(getCompilationOrThrowException(compId));
+        CompilationDto compilationDto = CompilationMapper.toCompilationDto(getCompilationOrThrowException(compId));
         compilationRepository.deleteById(compId);
-        log.info("Delete compilation with id: {}, compilation: {}", compId, deleted);
-        return deleted;
+        log.info("Удалить подборку событий по compId --> {}, compilation --> {}", compId, compilationDto);
+        return compilationDto;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CompilationDto> getCompilations(Integer from, Integer size, Boolean pinned) {
-        List<Compilation> compilations;
-        if (pinned == null) {
-            compilations = compilationRepository.findAll(Paging.getPageable(from, size)).getContent();
-        } else {
-            compilations = compilationRepository.findAllByPinned(pinned);
-        }
+        List<Compilation> compilations = (pinned == null) ?
+                compilationRepository.findAll(Paging.getPageable(from, size)).getContent() :
+                compilationRepository.findAllByPinned(pinned);
         ListLogger.logResultList(compilations);
         return CompilationMapper.toCompilationDtoList(compilations);
     }
@@ -96,7 +93,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Transactional(readOnly = true)
     public CompilationDto getCompilationById(Integer compId) {
         Compilation compilation = getCompilationOrThrowException(compId);
-        log.info("Compilation {} was found by id {}", compilation, compId);
+        log.info("Поиск подборки событий --> {} по compId {}", compilation, compId);
         return CompilationMapper.toCompilationDto(compilation);
     }
 
@@ -107,7 +104,7 @@ public class CompilationServiceImpl implements CompilationService {
     private Compilation getCompilationOrThrowException(Integer compilationId) {
         return compilationRepository.findById(compilationId)
                 .orElseThrow(() -> new NotFoundException(
-                        ErrorConstants.getNotFoundMessage("Compilation", compilationId)));
+                        ErrorConstants.getNotFoundMessage("Подборка событий", compilationId)));
     }
 
 }

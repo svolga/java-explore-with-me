@@ -277,32 +277,32 @@ public class EventServiceImpl implements EventService {
         checkIsEventAvailable(confirmed, limit);
 
         int breakPoint = limit - confirmed;
-        int numberOfRequests = requests.size();
-        log.info("Event is available. Number of requests to confirm is {}, available number is {}: ",
-                numberOfRequests, breakPoint);
+        int countRequests = requests.size();
+        log.info("Количество запросов для подтверждения --> {}, доступно {}: ",
+                countRequests, breakPoint);
         List<Request> availableToConfirm;
         List<Request> mustBeRejected;
         List<Request> pendingRest;
 
-        if (numberOfRequests < breakPoint) {
-            saveEventWithUpdatedNumberOfConfirmedRequests(event, numberOfRequests);
-            log.info("We can confirm all {} requests", numberOfRequests);
+        if (countRequests < breakPoint) {
+            saveEventWithUpdatedNumberOfConfirmedRequests(event, countRequests);
+            log.info("Доступно запросов для подтверждения --> {}", countRequests);
             return confirmAllRequests(requests);
-        } else if (numberOfRequests == breakPoint) {
+        } else if (countRequests == breakPoint) {
             availableToConfirm = requests;
             confirmAllRequests(availableToConfirm);
             mustBeRejected = getRestOfPendingRequests(event.getId());
             rejectAllRequests(mustBeRejected);
             saveEventWithUpdatedNumberOfConfirmedRequests(event, availableToConfirm.size());
-            log.info("We can confirm all {} requests but have to reject all pending out of current session: {}." +
-                            " Event {} is not more available",
+            log.info("Доступно для подтверждения запросов --> {}, для отклонения --> {}," +
+                            " Недоступное событие --> {}",
                     availableToConfirm.size(), mustBeRejected.size(), event.getId());
             return constructResult(availableToConfirm, mustBeRejected);
         } else {
             availableToConfirm = requests.subList(0, breakPoint);
             confirmAllRequests(availableToConfirm);
             saveEventWithUpdatedNumberOfConfirmedRequests(event, availableToConfirm.size());
-            mustBeRejected = requests.subList(breakPoint, numberOfRequests);
+            mustBeRejected = requests.subList(breakPoint, countRequests);
             rejectAllRequests(mustBeRejected);
             pendingRest = getRestOfPendingRequests(event.getId());
             rejectAllRequests(pendingRest);

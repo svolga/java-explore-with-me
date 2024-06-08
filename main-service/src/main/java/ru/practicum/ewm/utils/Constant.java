@@ -1,6 +1,8 @@
 package ru.practicum.ewm.utils;
 
 public class Constant {
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     public static final String DELIM_URL = "/";
     public static final String ADMIN_URL = "/admin";
     public static final String CANCEL_URL = "/cancel";
@@ -16,22 +18,20 @@ public class Constant {
     public static final String REQUEST_ID_PATH_VARIABLE = "/{requestId}";
     public static final String USER_ID_PATH_VARIABLE = "/{userId}";
 
-    public static final String CATEGORIES_PARAMETER_NAME = "categories";
-    public static final String FROM_PARAMETER_NAME = "from";
-    public static final String IDS_PARAMETER_NAME = "ids";
-    public static final String PAID_PARAMETER_NAME = "paid";
-    public static final String PINNED_PARAMETER_NAME = "pinned";
-    public static final String RANGE_END_PARAMETER_NAME = "rangeEnd";
-    public static final String RANGE_START_PARAMETER_NAME = "rangeStart";
-    public static final String SIZE_PARAMETER_NAME = "size";
-    public static final String SORT_PARAMETER_NAME = "sort";
-    public static final String STATES_PARAMETER_NAME = "states";
-    public static final String TEXT_PARAMETER_NAME = "text";
-    public static final String USERS_PARAM_NAME = "users";
-    public static final String ONLY_AVAILABLE_PARAM_NAME = "onlyAvailable";
-    public static final String ZERO_DEFAULT_VALUE = "0";
-    public static final String TEN_DEFAULT_VALUE = "10";
-    public static final String FALSE_DEFAULT_VALUE = "false";
-
-    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String PARAMETER_CATEGORIES = "categories";
+    public static final String PARAMETER_FROM = "from";
+    public static final String PARAMETER_IDS = "ids";
+    public static final String PARAMETER_PAID = "paid";
+    public static final String PARAMETER_PINNED = "pinned";
+    public static final String PARAMETER_RANGE_END = "rangeEnd";
+    public static final String PARAMETER_RANGE_START = "rangeStart";
+    public static final String PARAMETER_SIZE = "size";
+    public static final String PARAMETER_SORT = "sort";
+    public static final String PARAMETER_STATES = "states";
+    public static final String PARAMETER_TEXT = "text";
+    public static final String PARAMETER_USERS = "users";
+    public static final String PARAMETER_ONLY_AVAILABLE = "onlyAvailable";
+    public static final String DEFAULT_ZERO = "0";
+    public static final String DEFAULT_TEN = "10";
+    public static final String DEFAULT_FALSE = "false";
 }

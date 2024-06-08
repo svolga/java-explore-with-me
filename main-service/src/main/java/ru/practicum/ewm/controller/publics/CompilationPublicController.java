@@ -27,14 +27,14 @@ public class CompilationPublicController {
 
     @GetMapping
     public List<CompilationDto> getCompilations(
-            @RequestParam(name = Constant.PINNED_PARAMETER_NAME,
+            @RequestParam(name = Constant.PARAMETER_PINNED,
                     required = false) Boolean pinned,
             @PositiveOrZero @RequestParam(
-                    name = Constant.FROM_PARAMETER_NAME,
-                    defaultValue = Constant.ZERO_DEFAULT_VALUE) Integer from,
+                    name = Constant.PARAMETER_FROM,
+                    defaultValue = Constant.DEFAULT_ZERO) Integer from,
             @Positive @RequestParam(
-                    name = Constant.SIZE_PARAMETER_NAME,
-                    defaultValue = Constant.TEN_DEFAULT_VALUE) Integer size) {
+                    name = Constant.PARAMETER_SIZE,
+                    defaultValue = Constant.DEFAULT_TEN) Integer size) {
         log.info("Получение подборок событий, искать только закрепленные/не закрепленные подборки pinned --> {}, " +
                 "from --> {}, size --> {}", pinned, from, size);
         return compilationService.getCompilations(from, size, pinned);
