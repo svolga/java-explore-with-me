@@ -9,11 +9,17 @@ import ru.practicum.dto.ViewStats;
 import ru.practicum.ewm.stats.mapper.HitMapper;
 import ru.practicum.ewm.stats.model.Hit;
 import ru.practicum.ewm.stats.repository.HitJpaRepository;
+import ru.practicum.ewm.stats.utils.Constant;
+import ru.practicum.ewm.stats.utils.ListLogger;
 
-import java.math.BigInteger;
+import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,37 +31,62 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public EndpointHit create(EndpointHit endpointHit) {
         Hit hit = HitMapper.toHit(endpointHit);
-        hit = hitJpaRepository.save(hit);
-        log.info("Create endpoint hit {}", hit);
-        return HitMapper.toEndpointHit(hit);
+        Hit savedHit = hitJpaRepository.save(hit);
+        log.info("Create endpoint hit --> {}", savedHit);
+        return HitMapper.toEndpointHit(savedHit);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
+    public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique)
+            throws ValidationException {
 
-        int isSearchUrl = (uris == null || uris.isEmpty() ? 0 : 1);
+        if (start.isAfter(end)) {
+            throw new ValidationException(Constant.INVALID_DATE_RANGE);
+        }
 
-        List<Object[]> list = unique ?
-                hitJpaRepository.findStatisticsBetweenStartAndEndUniqueIp(start, end, isSearchUrl, uris) :
-                hitJpaRepository.findStatisticsBetweenStartAndEnd(start, end, isSearchUrl, uris);
+        List<Hit> hits = (uris == null) ?
+                hitJpaRepository.findAllByTimestampBetween(start, end) :
+                hitJpaRepository.findAllByUriInAndTimestampBetween(uris, start, end);
 
-        List<ViewStats> stats = convertViewStatesFromObject(list);
+        List<ViewStats> stats = new ArrayList<>();
+        if (!hits.isEmpty()) {
+            if (Boolean.TRUE.equals(unique)) {
+                hits = new ArrayList<>(hits.stream()
+                        .collect(Collectors.toMap(Hit::getIp, Function.identity(), (hit1, hit2) -> hit1))
+                        .values());
+
+                ListLogger.logResultList(hits);
+            }
+            stats = mapAndSortList(hits, uris);
+        }
+
+        ListLogger.logResultList(stats);
         log.info("stats --> {}", stats);
         return stats;
 
     }
 
-    private List<ViewStats> convertViewStatesFromObject(List<Object[]> list) {
-        List<ViewStats> result = new ArrayList<>();
-        if (list != null && !list.isEmpty()) {
-            list.stream()
-                    .map(object -> result.add(new ViewStats(
-                            (String) object[0],
-                            (String) object[1],
-                            ((BigInteger) object[2]).longValue()))).toArray();
+    private List<ViewStats> mapAndSortList(List<Hit> hits, List<String> uris) {
+
+        Comparator<ViewStats> viewDesc = Comparator.comparing(ViewStats::getHits).reversed();
+
+        if (uris != null) {
+            Map<String, Long> uriViews = hits.stream()
+                    .collect(Collectors.groupingBy((Hit::getUri), Collectors.summingLong(h -> 1)));
+
+            return hits.stream()
+                    .map(hit -> new ViewStats(hit.getApp(), hit.getUri(), uriViews.get(hit.getUri())))
+                    .distinct()
+                    .sorted(viewDesc)
+                    .collect(Collectors.toList());
         }
-        return result;
+
+        Long views = Long.valueOf(hits.size());
+        return hits.stream()
+                .map(hit -> new ViewStats(hit.getApp(), hit.getUri(), views))
+                .sorted(viewDesc)
+                .collect(Collectors.toList());
     }
 
 }

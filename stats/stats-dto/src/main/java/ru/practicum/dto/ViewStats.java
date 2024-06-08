@@ -2,10 +2,13 @@ package ru.practicum.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.Value;
+import lombok.Data;
 
+@Data
 @Builder(toBuilder = true)
-@Value
+@NoArgsConstructor
 @AllArgsConstructor
 public class ViewStats {
     private String app;

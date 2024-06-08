@@ -5,7 +5,7 @@ import ru.practicum.ewm.stats.model.Hit;
 
 import java.time.LocalDateTime;
 
-import static ru.practicum.ewm.stats.utils.Constant.DATE_TIME_FORMATTER;
+import ru.practicum.ewm.stats.utils.Constant;
 
 public class HitMapper {
 
@@ -16,7 +16,7 @@ public class HitMapper {
                 .app(endpointHit.getApp())
                 .uri(endpointHit.getUri())
                 .ip(endpointHit.getIp())
-                .timestamp(LocalDateTime.parse(endpointHit.getTimestamp(), DATE_TIME_FORMATTER))
+                .timestamp(LocalDateTime.parse(endpointHit.getTimestamp(), Constant.DATE_TIME_FORMATTER))
                 .build();
     }
 
@@ -26,7 +26,7 @@ public class HitMapper {
                 .app(hit.getApp())
                 .uri(hit.getUri())
                 .ip(hit.getIp())
-                .timestamp(hit.getTimestamp().format(DATE_TIME_FORMATTER))
+                .timestamp(hit.getTimestamp().format(Constant.DATE_TIME_FORMATTER))
                 .build();
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface HitJpaRepository extends JpaRepository<Hit, Long> {
-
+/*
     @Query(value = "SELECT h.app AS app, h.uri AS uri, COUNT(h.*) AS hits " +
             "FROM hits AS h " +
             "WHERE h.timestamp >= ?1  AND h.timestamp <= ?2 AND " +
@@ -18,7 +18,10 @@ public interface HitJpaRepository extends JpaRepository<Hit, Long> {
             "GROUP BY h.app, h.uri " +
             "ORDER BY COUNT(h.*) DESC", nativeQuery = true)
     List<Object[]> findStatisticsBetweenStartAndEnd(LocalDateTime start, LocalDateTime end, int isUris, List<String> uris);
+**/
 
+    List<Hit> findAllByUriInAndTimestampBetween(List<String> uris, LocalDateTime start, LocalDateTime end);
+/*
     @Query(value = "SELECT v.app AS app, v.uri AS uri, COUNT(v.*) AS hits " +
             "FROM ( " +
             "SELECT DISTINCT h.ip, h.app, h.uri " +
@@ -29,4 +32,7 @@ public interface HitJpaRepository extends JpaRepository<Hit, Long> {
             "GROUP BY v.app, v.uri " +
             "ORDER BY COUNT(v.*) DESC", nativeQuery = true)
     List<Object[]> findStatisticsBetweenStartAndEndUniqueIp(LocalDateTime start, LocalDateTime end, int isUris, List<String> uris);
+ */
+    List<Hit> findAllByTimestampBetween(LocalDateTime start, LocalDateTime end);
+
 }

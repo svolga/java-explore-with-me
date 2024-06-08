@@ -25,13 +25,13 @@ public class Hit {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "app", nullable = false)
+    @Column(name = "app", length = 64, nullable = false)
     private String app;
 
-    @Column(name = "uri", length = 512, nullable = false)
+    @Column(name = "uri", nullable = false)
     private String uri;
 
-    @Column(name = "ip", length = 16, nullable = false)
+    @Column(name = "ip", length = 32, nullable = false)
     private String ip;
 
     @Column(name = "timestamp", nullable = false)
