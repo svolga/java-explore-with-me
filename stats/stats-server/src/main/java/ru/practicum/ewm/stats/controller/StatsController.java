@@ -18,7 +18,6 @@ import ru.practicum.ewm.stats.service.StatsService;
 import ru.practicum.ewm.stats.utils.Constant;
 
 import javax.validation.Valid;
-import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class StatsController {
             @Valid @RequestParam("end") @DateTimeFormat(pattern = Constant.DATE_TIME_FORMAT) LocalDateTime end,
             @RequestParam(value = "uris", defaultValue = "", required = false) List<String> uris,
             @RequestParam(value = "unique", defaultValue = "false", required = false) boolean unique
-    ) throws ValidationException {
+    )  {
         log.info("GET request: start ={}, end={}, uris = {}, unique = {}", start, end, uris, unique);
         return statsService.getStats(start, end, uris, unique);
     }

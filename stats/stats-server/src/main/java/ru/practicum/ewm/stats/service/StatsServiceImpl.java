@@ -9,10 +9,9 @@ import ru.practicum.dto.ViewStats;
 import ru.practicum.ewm.stats.mapper.HitMapper;
 import ru.practicum.ewm.stats.model.Hit;
 import ru.practicum.ewm.stats.repository.HitJpaRepository;
-import ru.practicum.ewm.stats.utils.Constant;
 import ru.practicum.ewm.stats.utils.ListLogger;
+import ru.practicum.ewm.stats.utils.validation.DateTimeValidator;
 
-import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -38,12 +37,9 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique)
-            throws ValidationException {
+    public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique){
 
-        if (start.isAfter(end)) {
-            throw new ValidationException(Constant.INVALID_DATE_RANGE);
-        }
+        DateTimeValidator.checkStartTimeIsAfterEnd(start, end);
 
         List<Hit> hits = (uris == null) ?
                 hitJpaRepository.findAllByTimestampBetween(start, end) :
