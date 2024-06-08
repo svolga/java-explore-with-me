@@ -47,13 +47,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public CategoryDto addCategory(NewCategoryDto categoryData) {
-        try{
+        try {
             Category newCategory = categoryRepository.save(CategoryMapper.toCategoryEntity(categoryData));
             CategoryDto newCategoryDto = CategoryMapper.toCategoryDto(newCategory);
             log.info("Добавлена Category --> {}", newCategoryDto);
             return newCategoryDto;
-        }
-        catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new ConflictConstraintUniqueException(ErrorConstants.CATEGORY_NAME_UNIQUE_VIOLATION);
         }
     }

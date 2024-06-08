@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 import ru.practicum.ewm.dto.user.NewUserRequest;
 import ru.practicum.ewm.dto.user.UserDto;
 import ru.practicum.ewm.entity.User;
@@ -13,9 +16,6 @@ import ru.practicum.ewm.utils.errors.exceptions.NotFoundException;
 import ru.practicum.ewm.utils.logger.ListLogger;
 import ru.practicum.ewm.utils.mapper.UserMapper;
 import ru.practicum.ewm.utils.paging.Paging;
-
-import java.util.List;
-
 
 @Service
 @Slf4j
@@ -27,10 +27,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto addUser(NewUserRequest userData) {
-            User newUser = userRepository.save(UserMapper.toUserEntity(userData));
-            UserDto newUserDto = UserMapper.toUserDto(newUser);
-            log.info("Создан user --> {}", newUserDto);
-            return newUserDto;
+        User newUser = userRepository.save(UserMapper.toUserEntity(userData));
+        UserDto newUserDto = UserMapper.toUserDto(newUser);
+        log.info("Создан user --> {}", newUserDto);
+        return newUserDto;
     }
 
     @Override
@@ -60,5 +60,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(ErrorConstants.getNotFoundMessage("User", userId)));
     }
-
 }
