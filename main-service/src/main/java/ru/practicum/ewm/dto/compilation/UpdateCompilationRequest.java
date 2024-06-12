@@ -11,10 +11,9 @@ import java.util.List;
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
 public class UpdateCompilationRequest {
-    private List<Long> events;
+    private final List<Long> events;
     @Size(min = 1, max = 50)
-    private String title;
-    private Boolean pinned;
+    private final String title;
+    private final Boolean pinned;
 }

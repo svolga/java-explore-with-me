@@ -16,27 +16,26 @@ import static ru.practicum.ewm.utils.Constant.DATE_TIME_FORMAT;
 
 @Data
 @Builder(toBuilder = true)
-@NoArgsConstructor
 @AllArgsConstructor
 public class EventFullDto {
-    private Long id;
-    private String annotation;
-    private CategoryDto category;
-    private Integer confirmedRequests;
+    private final Long id;
+    private final String annotation;
+    private final CategoryDto category;
+    private final Integer confirmedRequests;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
-    private LocalDateTime createdOn;
-    private String description;
+    private final LocalDateTime createdOn;
+    private final String description;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
-    private LocalDateTime eventDate;
-    private UserShortDto initiator;
-    private Location location;
-    private Boolean paid;
+    private final LocalDateTime eventDate;
+    private final UserShortDto initiator;
+    private final Location location;
+    private final Boolean paid;
     @PositiveOrZero(message = "Неотрицательное значение")
-    private Integer participantLimit;
+    private final Integer participantLimit;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
-    private LocalDateTime publishedOn;
-    private Boolean requestModeration;
-    private EventState state;
-    private String title;
-    private Long views;
+    private final LocalDateTime publishedOn;
+    private final Boolean requestModeration;
+    private final EventState state;
+    private final String title;
+    private final Long views;
 }

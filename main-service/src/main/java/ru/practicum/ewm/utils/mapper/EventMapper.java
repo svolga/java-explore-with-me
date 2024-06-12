@@ -52,7 +52,6 @@ public class EventMapper {
                 .eventDate(event.getEventDate())
                 .createdOn(event.getCreatedOn())
                 .publishedOn(event.getPublishedOn() == null ? null : event.getPublishedOn())
-//                .participantLimit(event.getParticipantLimit())
                 .participantLimit(event.getParticipantLimit() == null ? 0 : event.getParticipantLimit())
                 .requestModeration(event.getRequestModeration())
                 .confirmedRequests(event.getConfirmedRequests())

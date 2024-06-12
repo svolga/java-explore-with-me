@@ -18,25 +18,24 @@ import java.time.LocalDateTime;
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
 public class NewEventDto {
     @Size(min = 20, max = 2000)
     @NotBlank
-    private String annotation;
-    private Long category;
+    private final String annotation;
+    private final Long category;
     @Size(min = 20, max = 7000)
     @NotBlank
-    private String description;
+    private final String description;
     @NotNull
     @TwoHoursLater
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constant.DATE_TIME_FORMAT)
-    private LocalDateTime eventDate;
+    private final LocalDateTime eventDate;
     @NotNull
-    private Location location;
-    private Boolean paid;
+    private final Location location;
+    private final Boolean paid;
     @PositiveOrZero(message = "Неотрицательное значение")
-    private Integer participantLimit;
-    private Boolean requestModeration;
+    private final Integer participantLimit;
+    private final Boolean requestModeration;
     @Size(min = 3, max = 120)
-    String title;
+    private final String title;
 }
