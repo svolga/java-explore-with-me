@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 import ru.practicum.ewm.enums.StateAction;
 import ru.practicum.ewm.utils.validation.TwoHoursLater;
