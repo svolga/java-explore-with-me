@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventShortDto;
-import ru.practicum.ewm.dto.event.search.SearchEvent;
 import ru.practicum.ewm.service.event.EventService;
 import ru.practicum.ewm.utils.Constant;
 
@@ -62,23 +61,14 @@ public class EventPublicController {
                     name = Constant.PARAMETER_SIZE,
                     defaultValue = Constant.DEFAULT_TEN) @Positive Integer size,
             HttpServletRequest request) {
+        log.info("Public запрос на получение событий с возможностью фильтрации text --> {}, categories --> {}, " +
+                        "paid --> {}, rangeStart --> {}, rangeEnd --> {}, onlyAvailable --> {}, sort --> {}, " +
+                        "from --> {}, size --> {}, RemoteAddr --> {}",
+                text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size, request.getRemoteAddr());
 
-        SearchEvent searchEvent = SearchEvent.builder()
-                .text(text)
-                .categories(categories)
-                .paid(paid)
-                .rangeEnd(rangeStart)
-                .rangeEnd(rangeEnd)
-                .onlyAvailable(onlyAvailable)
-                .sort(sort)
-                .from(from)
-                .size(size)
-                .build();
-
-        log.info("Public запрос на получение событий с возможностью фильтрации searchEvent --> {}, RemoteAddr --> {}",
-                searchEvent, request.getRemoteAddr());
-
-        return eventService.getPublicEvents(searchEvent, request);
+        return eventService
+                .getPublicEvents(text, categories, paid, rangeStart, rangeEnd,
+                        onlyAvailable, sort, from, size, request);
     }
 
     @GetMapping(Constant.EVENT_ID_PATH_VARIABLE)

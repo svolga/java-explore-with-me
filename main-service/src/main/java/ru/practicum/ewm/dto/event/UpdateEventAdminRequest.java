@@ -21,22 +21,23 @@ import static ru.practicum.ewm.utils.Constant.DATE_TIME_FORMAT;
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
+@NoArgsConstructor
 public class UpdateEventAdminRequest extends UpdateEventRequest {
     @Size(min = 20, max = 2000)
-    private final String annotation;
-    private final Long category;
+    private String annotation;
+    private Long category;
     @Size(min = 20, max = 7000)
-    private final String description;
+    private String description;
     @JsonProperty("eventDate")
     @JsonFormat(pattern = DATE_TIME_FORMAT, shape = JsonFormat.Shape.STRING)
     @Nullable
     @TwoHoursLater
-    private final LocalDateTime eventDate;
-    private final Location location;
-    private final Boolean paid;
-    private final Integer participantLimit;
-    private final Boolean requestModeration;
-    private final StateAction stateAction;
+    private LocalDateTime eventDate;
+    private Location location;
+    private Boolean paid;
+    private Integer participantLimit;
+    private Boolean requestModeration;
+    private StateAction stateAction;
     @Size(min = 3, max = 120)
-    private final String title;
+    private String title;
 }

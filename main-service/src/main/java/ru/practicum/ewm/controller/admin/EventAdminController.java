@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.event.EventFullDto;
-import ru.practicum.ewm.dto.event.search.SearchEvent;
 import ru.practicum.ewm.dto.event.UpdateEventAdminRequest;
 import ru.practicum.ewm.service.event.EventService;
 import ru.practicum.ewm.utils.Constant;
@@ -57,19 +56,10 @@ public class EventAdminController {
             @Positive @RequestParam(
                     name = Constant.PARAMETER_SIZE,
                     defaultValue = Constant.DEFAULT_TEN) Integer size) {
-
-        SearchEvent searchEvent = SearchEvent.builder()
-                .users(users)
-                .states(states)
-                .categories(categories)
-                .rangeStart(rangeStart)
-                .rangeEnd(rangeEnd)
-                .from(from)
-                .size(size)
-                .build();
-
-        log.info("Получить Events для админа для searchEvent --> {}", searchEvent);
-        return eventService.getEventsByAdmin(searchEvent);
+        log.info("Получить Events для админа для users --> {}, states --> {}, categories --> {}, \n"
+                        + "rangeStart --> {}, rangeEnd --> {}, значение from --> {}, size --> {}",
+                users, states, categories, rangeStart, rangeEnd, from, size);
+        return eventService.getEventsByAdmin(users, states, categories, rangeStart, rangeEnd, from, size);
     }
 
     @PatchMapping(Constant.EVENT_ID_PATH_VARIABLE)
