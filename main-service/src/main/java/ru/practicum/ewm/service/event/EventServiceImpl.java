@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventShortDto;
 import ru.practicum.ewm.dto.event.NewEventDto;
+import ru.practicum.ewm.dto.event.search.SearchEvent;
 import ru.practicum.ewm.dto.event.UpdateEventAdminRequest;
 import ru.practicum.ewm.dto.event.UpdateEventRequest;
 import ru.practicum.ewm.dto.event.UpdateEventUserRequest;
@@ -100,27 +101,30 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EventShortDto> getPublicEvents(String text, List<Long> categories, Boolean paid,
-                                               LocalDateTime rangeStart, LocalDateTime rangeEnd,
-                                               Boolean onlyAvailable, String sort, Integer from, Integer size,
-                                               HttpServletRequest request) {
-
-        SortType sortType = (sort == null) ? null : EnumTypeValidation.getValidSortType(sort);
-        LocalDateTime start = (rangeStart == null) ? LocalDateTime.now() : rangeStart;
-        LocalDateTime end = (rangeEnd == null) ? LocalDateTime.now().plusYears(100) : rangeEnd;
+    public List<EventShortDto> getPublicEvents(SearchEvent searchEvent, HttpServletRequest request) {
+        SortType sortType = (searchEvent.getSort() == null) ? null :
+                EnumTypeValidation.getValidSortType(searchEvent.getSort());
+        LocalDateTime start = (searchEvent.getRangeStart() == null) ? LocalDateTime.now() :
+                searchEvent.getRangeStart();
+        LocalDateTime end = (searchEvent.getRangeEnd() == null) ? LocalDateTime.now().plusYears(100) :
+                searchEvent.getRangeEnd();
 
         EventTimeValidator.checkStartTimeIsAfterEnd(start, end);
 
         List<Event> events;
-        if (onlyAvailable) {
+        if (searchEvent.getOnlyAvailable()) {
             events = eventRepository.findAvailableForPublic(
-                    text, categories, paid, start, end,
-                    String.valueOf(EventState.PUBLISHED), Paging.getPageable(from, size, sortType));
+                    searchEvent.getText(), searchEvent.getCategories(), searchEvent.getPaid(),
+                    searchEvent.getRangeStart(), searchEvent.getRangeEnd(),
+                    String.valueOf(EventState.PUBLISHED),
+                    Paging.getPageable(searchEvent.getFrom(), searchEvent.getSize(), sortType));
 
         } else {
             events = eventRepository.findAllForPublic(
-                    text, categories, paid, start, end,
-                    String.valueOf(EventState.PUBLISHED), Paging.getPageable(from, size, sortType));
+                    searchEvent.getText(), searchEvent.getCategories(), searchEvent.getPaid(),
+                    searchEvent.getRangeStart(), searchEvent.getRangeEnd(),
+                    String.valueOf(EventState.PUBLISHED),
+                    Paging.getPageable(searchEvent.getFrom(), searchEvent.getSize(), sortType));
         }
 
         statisticsService.saveStats(request);
@@ -195,14 +199,14 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EventFullDto> getEventsByAdmin(List<Long> users, List<String> states, List<Long> categories,
-                                               LocalDateTime rangeStart, LocalDateTime rangeEnd,
-                                               Integer from, Integer size) {
-        if (states != null) {
-            EnumTypeValidation.checkValidEventStates(states);
+    public List<EventFullDto> getEventsByAdmin(SearchEvent searchEvent) {
+        if (searchEvent.getStates() != null) {
+            EnumTypeValidation.checkValidEventStates(searchEvent.getStates());
         }
         List<Event> events = eventRepository.findForAdmin(
-                users, states, categories, rangeStart, rangeEnd, Paging.getPageable(from, size));
+                searchEvent.getUsers(), searchEvent.getStates(), searchEvent.getCategories(),
+                searchEvent.getRangeStart(), searchEvent.getRangeEnd(),
+                Paging.getPageable(searchEvent.getFrom(), searchEvent.getSize()));
         List<EventFullDto> resultList = EventMapper.toEventFullDtoList(events);
         ListLogger.logResultList(resultList);
         return resultList;
