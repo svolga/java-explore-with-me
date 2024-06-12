@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
 public class SearchEvent {
     private String text;
     private List<Long> categories;
