@@ -20,21 +20,21 @@ import java.time.LocalDateTime;
 public class NewEventDto {
     @Size(min = 20, max = 2000)
     @NotBlank
-    private final String annotation;
-    private final Long category;
+    private String annotation;
+    private Long category;
     @Size(min = 20, max = 7000)
     @NotBlank
-    private final String description;
+    private String description;
     @NotNull
     @TwoHoursLater
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constant.DATE_TIME_FORMAT)
-    private final LocalDateTime eventDate;
+    private LocalDateTime eventDate;
     @NotNull
-    private final Location location;
-    private final Boolean paid;
+    private Location location;
+    private Boolean paid;
     @PositiveOrZero(message = "Неотрицательное значение")
-    private final Integer participantLimit;
-    private final Boolean requestModeration;
+    private Integer participantLimit;
+    private Boolean requestModeration;
     @Size(min = 3, max = 120)
-    private final String title;
+    private String title;
 }

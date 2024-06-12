@@ -11,8 +11,8 @@ import java.util.List;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 public class UpdateCompilationRequest {
-    private final List<Long> events;
+    private List<Long> events;
     @Size(min = 1, max = 50)
-    private final String title;
-    private final Boolean pinned;
+    private String title;
+    private Boolean pinned;
 }
