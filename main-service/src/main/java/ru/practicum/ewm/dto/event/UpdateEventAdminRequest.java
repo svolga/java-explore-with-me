@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 import ru.practicum.ewm.enums.StateAction;
 import ru.practicum.ewm.utils.validation.TwoHoursLater;
@@ -20,6 +21,7 @@ import static ru.practicum.ewm.utils.Constant.DATE_TIME_FORMAT;
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
+@NoArgsConstructor
 public class UpdateEventAdminRequest extends UpdateEventRequest {
     @Size(min = 20, max = 2000)
     private String annotation;
