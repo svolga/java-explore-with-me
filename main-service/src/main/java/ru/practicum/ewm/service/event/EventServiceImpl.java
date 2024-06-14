@@ -250,7 +250,6 @@ public class EventServiceImpl implements EventService {
         }
 
         return resolveStatus(event, requests);
-
     }
 
     private Event getEventOrThrowException(Long eventId) {

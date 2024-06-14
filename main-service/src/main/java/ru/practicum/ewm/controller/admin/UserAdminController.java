@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.user.NewUserRequest;
 import ru.practicum.ewm.dto.user.UserDto;
+import ru.practicum.ewm.service.comment.CommentService;
 import ru.practicum.ewm.service.user.UserService;
 import ru.practicum.ewm.utils.Constant;
 
@@ -31,6 +32,7 @@ import java.util.List;
 public class UserAdminController {
 
     private final UserService userService;
+    private final CommentService commentService;
 
     @GetMapping
     public List<UserDto> getUsers(
@@ -60,4 +62,5 @@ public class UserAdminController {
         log.info("Удалить админом пользователя по userId --> {}", userId);
         return userService.deleteUser(userId);
     }
+
 }

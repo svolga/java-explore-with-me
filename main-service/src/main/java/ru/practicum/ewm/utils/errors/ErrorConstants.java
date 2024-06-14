@@ -18,7 +18,7 @@ public class ErrorConstants {
             + " значение меньше одного часа до старта события";
     public static final String TIME_IS_LESS_THAN_TWO_HOUR_BEFORE_START = "Нарушение значения времени:"
             + " значение меньше двух часов до старта события";
-    public static final String ONLY_FOR_INITIATOR = "Доступ только для инициатора собятия";
+    public static final String ONLY_FOR_INITIATOR = "Доступ только для инициатора события";
 
     public static final String NOT_FOR_INITIATOR = "Нет доступа для инициатора собятия";
 

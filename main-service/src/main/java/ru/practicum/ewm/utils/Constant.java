@@ -11,12 +11,14 @@ public class Constant {
     public static final String EVENTS_URL = "/events";
     public static final String REQUESTS_URL = "/requests";
     public static final String USERS_URL = "/users";
+    public static final String COMMENTS_URL = "/comments";
 
     public static final String CATEGORY_ID_PATH_VARIABLE = "/{catId}";
     public static final String COMPILATION_ID_PATH_VARIABLE = "/{compId}";
     public static final String EVENT_ID_PATH_VARIABLE = "/{eventId}";
     public static final String REQUEST_ID_PATH_VARIABLE = "/{requestId}";
     public static final String USER_ID_PATH_VARIABLE = "/{userId}";
+    public static final String COMMENT_ID_PATH_VARIABLE = "/{commentId}";
 
     public static final String PARAMETER_CATEGORIES = "categories";
     public static final String PARAMETER_FROM = "from";
@@ -31,6 +33,7 @@ public class Constant {
     public static final String PARAMETER_TEXT = "text";
     public static final String PARAMETER_USERS = "users";
     public static final String PARAMETER_ONLY_AVAILABLE = "onlyAvailable";
+    public static final String PARAMETER_COMMENTS = "comments";
     public static final String DEFAULT_ZERO = "0";
     public static final String DEFAULT_TEN = "10";
     public static final String DEFAULT_FALSE = "false";

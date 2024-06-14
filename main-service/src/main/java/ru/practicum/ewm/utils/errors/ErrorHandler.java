@@ -3,6 +3,7 @@ package ru.practicum.ewm.utils.errors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -42,6 +43,22 @@ public class ErrorHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         log.info("handleMethodArgumentValidViolations(MethodArgumentNotValidException e) --> {}", e);
+        writeLog(apiError);
+        return apiError;
+    }
+
+
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleHttpMessageNotReadableExceptionViolations(MethodArgumentNotValidException e) {
+
+        ApiError apiError = ApiError.builder()
+                .status(HttpStatusFormatter.formatHttpStatus(HttpStatus.BAD_REQUEST))
+                .reason(INCORRECTLY_MADE_REQUEST)
+                .message(constructMessage(e))
+                .timestamp(LocalDateTime.now())
+                .build();
+        log.info("handleHttpMessageNotReadableExceptionViolations(MethodArgumentNotValidException e) --> {}", e);
         writeLog(apiError);
         return apiError;
     }

@@ -42,5 +42,4 @@ public class CategoryPublicController {
         log.info("Получить категорию с доступом public по catId --> {}", catId);
         return categoryService.getCategoryById(catId);
     }
-
 }

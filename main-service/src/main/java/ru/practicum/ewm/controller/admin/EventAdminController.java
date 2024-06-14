@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.UpdateEventAdminRequest;
+import ru.practicum.ewm.service.comment.CommentService;
 import ru.practicum.ewm.service.event.EventService;
 import ru.practicum.ewm.utils.Constant;
 
@@ -65,8 +66,7 @@ public class EventAdminController {
     @PatchMapping(Constant.EVENT_ID_PATH_VARIABLE)
     public EventFullDto updateEventByAdmin(@PathVariable Long eventId,
                                            @Valid @RequestBody(required = false) UpdateEventAdminRequest request) {
-        log.info("Изменить Event админов для eventId --> {}, request --> {}", eventId, request);
+        log.info("Изменить Event админом для eventId --> {}, request --> {}", eventId, request);
         return eventService.updateEventByAdmin(eventId, request);
     }
-
 }

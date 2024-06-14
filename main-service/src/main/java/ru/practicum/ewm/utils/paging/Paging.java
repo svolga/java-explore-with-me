@@ -19,6 +19,9 @@ public class Paging {
             return PageRequest.of(page, size);
         } else {
             String fieldName = sortType.name().toLowerCase();
+            if ("created_on".equals(fieldName)) {
+                fieldName = "createdOn";
+            }
             if ("event_date".equals(fieldName)) {
                 fieldName = "eventDate";
             } else if ("views".equals(fieldName)) {

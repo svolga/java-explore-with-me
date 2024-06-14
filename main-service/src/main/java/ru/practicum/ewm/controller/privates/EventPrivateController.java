@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewm.dto.comment.CommentDto;
+import ru.practicum.ewm.dto.comment.NewCommentDto;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventShortDto;
 import ru.practicum.ewm.dto.event.NewEventDto;
@@ -20,6 +22,7 @@ import ru.practicum.ewm.dto.event.UpdateEventUserRequest;
 import ru.practicum.ewm.dto.request.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.dto.request.EventRequestStatusUpdateResult;
 import ru.practicum.ewm.dto.request.ParticipationRequestDto;
+import ru.practicum.ewm.service.comment.CommentService;
 import ru.practicum.ewm.service.event.EventService;
 import ru.practicum.ewm.utils.Constant;
 
@@ -36,6 +39,7 @@ import java.util.List;
 public class EventPrivateController {
 
     private final EventService eventService;
+    private final CommentService commentService;
 
     @GetMapping
     public List<EventShortDto> getEventsByUser(@Positive @PathVariable Long userId,
@@ -95,4 +99,46 @@ public class EventPrivateController {
                 userId, eventId, request);
         return eventService.updateRequestsStatus(userId, eventId, request);
     }
+
+    @PostMapping(Constant.EVENT_ID_PATH_VARIABLE + Constant.COMMENTS_URL)
+    @ResponseStatus(HttpStatus.CREATED)
+    public CommentDto addComment(@Positive @PathVariable Long userId,
+                                 @Positive @PathVariable Long eventId,
+                                 @Valid @RequestBody NewCommentDto comment) {
+        log.info("Создать комментарий с доступом private для userId --> {}, eventId --> {}, NewCommentDto --> {}"
+                , userId, eventId, comment);
+        return commentService.addComment(userId, eventId, comment);
+    }
+
+    @PatchMapping(Constant.EVENT_ID_PATH_VARIABLE + Constant.COMMENTS_URL + Constant.COMMENT_ID_PATH_VARIABLE)
+    @ResponseStatus(HttpStatus.OK)
+    public CommentDto updateCommentByUser(@Positive @PathVariable Long userId,
+                                          @Positive @PathVariable Long eventId,
+                                          @Positive @PathVariable Long commentId,
+                                          @Valid @RequestBody NewCommentDto comment) {
+        log.info("Изменить комментарий с доступом private для userId --> {}, eventId --> {}, commentId --> {}, " +
+                        "NewCommentDto --> {}"
+                , userId, eventId, commentId, comment);
+        return commentService.updateCommentByUser(userId, eventId, commentId, comment);
+    }
+
+    @GetMapping(Constant.EVENT_ID_PATH_VARIABLE + Constant.COMMENTS_URL)
+    @ResponseStatus(HttpStatus.OK)
+    public List<CommentDto> getCommentsByUserAndEvent(@Positive @PathVariable Long userId,
+                                                      @Positive @PathVariable Long eventId,
+                                                      @RequestParam(
+                                                              name = Constant.PARAMETER_SORT,
+                                                              required = false) String sort,
+                                                      @PositiveOrZero @RequestParam(
+                                                              name = Constant.PARAMETER_FROM,
+                                                              defaultValue = Constant.DEFAULT_ZERO) Integer from,
+                                                      @Positive @RequestParam(
+                                                              name = Constant.PARAMETER_SIZE,
+                                                              defaultValue = Constant.DEFAULT_TEN) Integer size) {
+        log.info("Получить комментарии с доступом private для userId --> {}, eventId --> {}, from --> {}, " +
+                        "size --> {}"
+                , userId, eventId, from, size);
+        return commentService.getCommentsByUserAndEvent(userId, eventId, sort, from, size);
+    }
+
 }
