@@ -117,8 +117,7 @@ public class EventPrivateController {
                                           @Positive @PathVariable Long commentId,
                                           @Valid @RequestBody NewCommentDto comment) {
         log.info("Изменить комментарий с доступом private для userId --> {}, eventId --> {}, commentId --> {}, " +
-                        "NewCommentDto --> {}"
-                , userId, eventId, commentId, comment);
+                "NewCommentDto --> {}", userId, eventId, commentId, comment);
         return commentService.updateCommentByUser(userId, eventId, commentId, comment);
     }
 
