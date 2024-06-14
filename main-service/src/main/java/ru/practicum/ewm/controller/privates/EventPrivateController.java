@@ -105,8 +105,8 @@ public class EventPrivateController {
     public CommentDto addComment(@Positive @PathVariable Long userId,
                                  @Positive @PathVariable Long eventId,
                                  @Valid @RequestBody NewCommentDto comment) {
-        log.info("Создать комментарий с доступом private для userId --> {}, eventId --> {}, NewCommentDto --> {}"
-                , userId, eventId, comment);
+        log.info("Создать комментарий с доступом private для userId --> {}, eventId --> {}, NewCommentDto --> {}",
+                userId, eventId, comment);
         return commentService.addComment(userId, eventId, comment);
     }
 

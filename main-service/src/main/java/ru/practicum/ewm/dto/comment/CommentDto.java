@@ -21,5 +21,5 @@ public class CommentDto {
     private EventShortDto event;
     private String text;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constant.DATE_TIME_FORMAT)
-    LocalDateTime created_at;
+    LocalDateTime created_on;
 }

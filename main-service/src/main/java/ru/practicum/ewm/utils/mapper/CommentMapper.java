@@ -28,7 +28,7 @@ public class CommentMapper {
                 .text(comment.getText())
                 .author(UserMapper.toUserShortDto(comment.getUser()))
                 .event(EventMapper.toEventShortDto(comment.getEvent()))
-                .created_at(comment.getCreatedOn())
+                .created_on(comment.getCreatedOn())
                 .build();
     }
 
