@@ -47,8 +47,7 @@ public class CommentPrivateController {
                                                       @Positive @RequestParam(
                                                               name = Constant.PARAMETER_SIZE,
                                                               defaultValue = Constant.DEFAULT_TEN) Integer size) {
-        log.info("Получить комментарии с доступом private для userId --> {}, from --> {}, size --> {}"
-                , userId, from, size);
+        log.info("Получить комментарии с доступом private для userId --> {}, from --> {}, size --> {}", userId, from, size);
         return commentService.getCommentsByUser(userId, sort, from, size);
     }
 

@@ -136,8 +136,7 @@ public class EventPrivateController {
                                                               name = Constant.PARAMETER_SIZE,
                                                               defaultValue = Constant.DEFAULT_TEN) Integer size) {
         log.info("Получить комментарии с доступом private для userId --> {}, eventId --> {}, from --> {}, " +
-                        "size --> {}"
-                , userId, eventId, from, size);
+                "size --> {}", userId, eventId, from, size);
         return commentService.getCommentsByUserAndEvent(userId, eventId, sort, from, size);
     }
 

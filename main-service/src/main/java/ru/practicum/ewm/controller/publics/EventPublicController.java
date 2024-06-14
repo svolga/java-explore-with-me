@@ -95,9 +95,7 @@ public class EventPublicController {
                                                @Positive @RequestParam(
                                                        name = Constant.PARAMETER_SIZE,
                                                        defaultValue = Constant.DEFAULT_TEN) Integer size) {
-        log.info("Получить комментарии с доступом public для eventId --> {}, from --> {}, " +
-                        "size --> {}"
-                , eventId, from, size);
+        log.info("Получить комментарии с доступом public для eventId --> {}, from --> {}, size --> {}", eventId, from, size);
         return commentService.getCommentsByEvent(eventId, sort, from, size);
     }
 
