@@ -26,7 +26,7 @@ public class CommentPublicController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<CommentDto> getComments(
+    public List<CommentDto> getComments(
             @RequestParam(
                     name = Constant.PARAMETER_SORT,
                     required = false) String sort,
