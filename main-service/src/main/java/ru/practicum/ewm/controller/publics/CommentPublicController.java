@@ -32,17 +32,17 @@ public class CommentPublicController {
                     name = Constant.PARAMETER_SORT,
                     required = false) String sort,
             @PositiveOrZero @RequestParam(
-            name = Constant.PARAMETER_FROM,
-            defaultValue = Constant.DEFAULT_ZERO) Integer from,
-                                 @Positive @RequestParam(
-                                         name = Constant.PARAMETER_SIZE,
-                                         defaultValue = Constant.DEFAULT_TEN) Integer size) {
+                    name = Constant.PARAMETER_FROM,
+                    defaultValue = Constant.DEFAULT_ZERO) Integer from,
+            @Positive @RequestParam(
+                    name = Constant.PARAMETER_SIZE,
+                    defaultValue = Constant.DEFAULT_TEN) Integer size) {
         log.info("Получить все комментарии с доступом public from --> {}, size --> {}", from, size);
         return commentService.getComments(sort, from, size);
     }
 
     @GetMapping(Constant.COMMENT_ID_PATH_VARIABLE)
-    public CommentDto getCommentById(@Positive @PathVariable Long commentId){
+    public CommentDto getCommentById(@Positive @PathVariable Long commentId) {
         log.info("Получить комментарий по commentId --> {}", commentId);
         return commentService.getCommentById(commentId);
     }
