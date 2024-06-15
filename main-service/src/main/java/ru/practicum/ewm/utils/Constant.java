@@ -33,8 +33,9 @@ public class Constant {
     public static final String PARAMETER_TEXT = "text";
     public static final String PARAMETER_USERS = "users";
     public static final String PARAMETER_ONLY_AVAILABLE = "onlyAvailable";
-    public static final String PARAMETER_COMMENTS = "comments";
     public static final String DEFAULT_ZERO = "0";
     public static final String DEFAULT_TEN = "10";
     public static final String DEFAULT_FALSE = "false";
+    public static final int MIN_LENGTH_COMMENT = 20;
+    public static final int MAX_LENGTH_COMMENT = 2000;
 }

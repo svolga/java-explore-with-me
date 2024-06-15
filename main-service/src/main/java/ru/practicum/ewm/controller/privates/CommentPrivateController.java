@@ -35,9 +35,9 @@ public class CommentPrivateController {
         return commentService.deleteCommentByUser(userId, commentId);
     }
 
-    @GetMapping(Constant.COMMENTS_URL)
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CommentDto> getCommentsByUserAndEvent(@Positive @PathVariable Long userId,
+    public List<CommentDto> getCommentsByUser(@Positive @PathVariable Long userId,
                                                       @RequestParam(
                                                               name = Constant.PARAMETER_SORT,
                                                               required = false) String sort,

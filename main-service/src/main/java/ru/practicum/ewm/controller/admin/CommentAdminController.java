@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.comment.CommentDto;
-import ru.practicum.ewm.dto.comment.NewCommentDto;
+import ru.practicum.ewm.dto.comment.UpdateCommentDto;
 import ru.practicum.ewm.service.comment.CommentService;
 import ru.practicum.ewm.utils.Constant;
 
@@ -27,12 +27,11 @@ import javax.validation.constraints.Positive;
 public class CommentAdminController {
     private final CommentService commentService;
 
-    @PatchMapping(Constant.COMMENT_ID_PATH_VARIABLE)
+    @PatchMapping
     @ResponseStatus(HttpStatus.OK)
-    public CommentDto updateCommentByAdmin(@Positive @PathVariable Long commentId,
-                                           @Valid @RequestBody(required = false) NewCommentDto newCommentDto) {
-        log.info("Изменить Comment админом для commentId --> {}, newCommentDto --> {}", commentId, newCommentDto);
-        return commentService.updateCommentByAdmin(commentId, newCommentDto);
+    public CommentDto updateCommentByAdmin(@Valid @RequestBody UpdateCommentDto updateCommentDto) {
+        log.info("Изменить Comment админом для updateCommentDto --> {}", updateCommentDto);
+        return commentService.updateCommentByAdmin(updateCommentDto);
     }
 
     @DeleteMapping(Constant.COMMENT_ID_PATH_VARIABLE)

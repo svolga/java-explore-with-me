@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,6 +39,12 @@ public class CommentPublicController {
                                          defaultValue = Constant.DEFAULT_TEN) Integer size) {
         log.info("Получить все комментарии с доступом public from --> {}, size --> {}", from, size);
         return commentService.getComments(sort, from, size);
+    }
+
+    @GetMapping(Constant.COMMENT_ID_PATH_VARIABLE)
+    public CommentDto getCommentById(@Positive @PathVariable Long commentId){
+        log.info("Получить комментарий по commentId --> {}", commentId);
+        return commentService.getCommentById(commentId);
     }
 
 }

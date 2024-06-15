@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.dto.comment.CommentDto;
 import ru.practicum.ewm.dto.comment.NewCommentDto;
+import ru.practicum.ewm.dto.comment.UpdateCommentDto;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventShortDto;
 import ru.practicum.ewm.dto.event.NewEventDto;
@@ -100,25 +101,22 @@ public class EventPrivateController {
         return eventService.updateRequestsStatus(userId, eventId, request);
     }
 
-    @PostMapping(Constant.EVENT_ID_PATH_VARIABLE + Constant.COMMENTS_URL)
+    @PostMapping(Constant.COMMENTS_URL)
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto addComment(@Positive @PathVariable Long userId,
-                                 @Positive @PathVariable Long eventId,
                                  @Valid @RequestBody NewCommentDto comment) {
-        log.info("Создать комментарий с доступом private для userId --> {}, eventId --> {}, NewCommentDto --> {}",
-                userId, eventId, comment);
-        return commentService.addComment(userId, eventId, comment);
+        log.info("Создать комментарий с доступом private для userId --> {}, NewCommentDto --> {}",
+                userId, comment);
+        return commentService.addComment(userId, comment);
     }
 
-    @PatchMapping(Constant.EVENT_ID_PATH_VARIABLE + Constant.COMMENTS_URL + Constant.COMMENT_ID_PATH_VARIABLE)
+    @PatchMapping(Constant.COMMENTS_URL)
     @ResponseStatus(HttpStatus.OK)
     public CommentDto updateCommentByUser(@Positive @PathVariable Long userId,
-                                          @Positive @PathVariable Long eventId,
-                                          @Positive @PathVariable Long commentId,
-                                          @Valid @RequestBody NewCommentDto comment) {
-        log.info("Изменить комментарий с доступом private для userId --> {}, eventId --> {}, commentId --> {}, " +
-                "NewCommentDto --> {}", userId, eventId, commentId, comment);
-        return commentService.updateCommentByUser(userId, eventId, commentId, comment);
+                                          @Valid @RequestBody UpdateCommentDto updateCommentDto) {
+        log.info("Изменить комментарий с доступом private для userId --> {}, " +
+                "UpdateCommentDto --> {}", userId, updateCommentDto);
+        return commentService.updateCommentByUser(userId, updateCommentDto);
     }
 
     @GetMapping(Constant.EVENT_ID_PATH_VARIABLE + Constant.COMMENTS_URL)

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.dto.comment.CommentDto;
 import ru.practicum.ewm.dto.comment.NewCommentDto;
+import ru.practicum.ewm.dto.comment.UpdateCommentDto;
 import ru.practicum.ewm.entity.Comment;
 import ru.practicum.ewm.entity.Event;
 import ru.practicum.ewm.entity.User;
@@ -30,9 +31,9 @@ public class CommentServiceImpl implements CommentService {
     private final EventRepository eventRepository;
 
     @Override
-    public CommentDto addComment(Long userId, Long eventId, NewCommentDto commentDto) {
+    public CommentDto addComment(Long userId, NewCommentDto commentDto) {
         User user = getUserOrThrowException(userId);
-        Event event = getEventOrThrowException(eventId);
+        Event event = getEventOrThrowException(commentDto.getEventId());
         Comment newComment = commentRepository.save(CommentMapper.toCommentEntity(commentDto, user, event));
         CommentDto newCommentDto = CommentMapper.toCommentDto(newComment);
         log.info("Добавлен Comment --> {}", newCommentDto);
@@ -40,10 +41,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto updateCommentByAdmin(Long commentId, NewCommentDto commentDto) {
-        Comment comment = getCommentOrThrowException(commentId);
+    public CommentDto updateCommentByAdmin(UpdateCommentDto updateCommentDto) {
+        Comment comment = getCommentOrThrowException(updateCommentDto.getId());
         Comment updated = comment.toBuilder()
-                .text(commentDto.getText())
+                .text(updateCommentDto.getText())
                 .build();
 
         Comment updatedComment = commentRepository.save(updated);
@@ -53,11 +54,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto updateCommentByUser(Long userId, Long eventId, Long commentId, NewCommentDto commentDto) {
+    public CommentDto updateCommentByUser(Long userId, UpdateCommentDto updateCommentDto) {
         getUserOrThrowException(userId);
-        checkIsInitiator(userId, commentId);
-        getEventOrThrowException(eventId);
-        return updateCommentByAdmin(commentId, commentDto);
+        checkIsInitiator(userId, updateCommentDto.getId());
+        getEventOrThrowException(updateCommentDto.getEventId());
+
+        return updateCommentByAdmin(updateCommentDto);
+    }
+
+    @Override
+    public CommentDto getCommentById(Long commentId) {
+        Comment comment = getCommentOrThrowException(commentId);
+        return CommentMapper.toCommentDto(comment);
     }
 
     @Override
